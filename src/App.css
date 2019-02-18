@@ -1,33 +1,40 @@
-.App {
-  text-align: center;
+.hexagon {
+  width: 100%;
+  height: 55px;
+  position: relative;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.hexagon, 
+.hexagon:before, 
+.hexagon:after {
+  background:#1A237E;
+  box-shadow: 0 0 10px rgba(0,0,0,0.8);   
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.hexagon:before,
+.hexagon:after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  width: 57px;
+  height: 57px;
+  transform: rotate(145deg) skew(22.5deg);
 }
 
-.App-link {
-  color: #61dafb;
+.hexagon:before {
+  top: -29px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.hexagon:after {
+  top: 27px;
+}
+
+.hexagon span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 55px;
+  background: #1A237E;
+  z-index: 1;
 }

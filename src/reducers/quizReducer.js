@@ -1,7 +1,9 @@
 const initialState = {
   questions: [],
   fetching: true,
-  currentQuestion: null
+  finished: false,
+  completed: false,
+  currentQuestion: {}
 }
 
 export default (state = initialState, action) => {
@@ -12,14 +14,18 @@ export default (state = initialState, action) => {
       return { ...state, fetching: false, error: action.error };
     case 'QUESTIONS_FETCHING':
       return { ...state, fetching: true };
-    case 'RIGHT_ANSWER':
+    case 'ASK_ANOTHER_QUESTION':
       return { ...state, currentQuestion: selectNextQuestion(state) };
+    case 'COMPLETE_QUIZ':
+      return { ...state, completed: true };
+    case 'FINISH_QUIZ':
+      return { ...state, finished: true };
     default:
       return state;
   }
 }
 
-const selectNextQuestion = ({ currentQuestion, questions }) => {
-  const currentQuestionIndex = questions.findIndex(({ id }) => id === currentQuestion);
-  return questions[currentQuestionIndex + 1];
+const selectNextQuestion = ({ questions, currentQuestion: { index } }) => {
+  console.log(index);
+  return questions[index + 1];
 }

@@ -1,16 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Grid } from 'semantic-ui-react';
+import Hexagon from '../common/Hexagon';
 
-export default class Options extends Component {
-  checkAnswer = (event) => {
-    console.log(event.target);
-  }
-
-  render() {
-    const { incorrect_answers, correct_answer, id } = this.props.currentQuestion,
-      randomIndex = Math.random() * (incorrect_answers.length + 1) * 100;
-    incorrect_answers.splice(randomIndex, 0, correct_answer);
-    const options = incorrect_answers.map((answer, index) => <li key={`${id}_${index}`} onClick={this.checkAnswer}>{answer}</li>);
-    return <ol>{options}</ol>;
-
-  }
+export default ({ currentQuestion: { options, id }, checkAnswer }) => {
+  const optionsUI = options.map(
+    (option, index) => {
+      return (
+        <Grid.Column width={8}>
+          <Hexagon
+            large
+            color='violet'
+            style={{ marginBottom: 5 }}
+            fluid
+            key={`${id}_${index}`}
+            onClick={() => checkAnswer(index)}>
+            {`${index + 1}. ${option}`}
+          </Hexagon>
+        </Grid.Column>
+      );
+    });
+  return (
+    <Grid>
+      <Grid.Row>
+        {optionsUI}
+      </Grid.Row>
+    </Grid>
+  )
 }
