@@ -1,13 +1,20 @@
 .hexagon {
-  width: 100%;
+  width: 80%;
   height: 55px;
   position: relative;
+  margin-bottom: 10%;
+  margin-left: 14px;
+  cursor: pointer;
+}
+
+.hexagon:hover {
+  background: #12005e;
 }
 
 .hexagon, 
 .hexagon:before, 
 .hexagon:after {
-  background:#1A237E;
+  background: #1A237E;
   box-shadow: 0 0 10px rgba(0,0,0,0.8);   
 }
 
@@ -15,26 +22,28 @@
 .hexagon:after {
   content: "";
   position: absolute;
-  left: 22px;
-  width: 57px;
-  height: 57px;
+  top: 3px;
+  width: 50px;
+  height: 50px;
   transform: rotate(145deg) skew(22.5deg);
 }
 
 .hexagon:before {
-  top: -29px;
+  left: -24px;
 }
 
 .hexagon:after {
-  top: 27px;
+  right: -24px;
 }
 
 .hexagon span {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100px;
+  width: 100%;
   height: 55px;
+  padding: 5px;
+  color: ghostwhite;
   background: #1A237E;
   z-index: 1;
 }

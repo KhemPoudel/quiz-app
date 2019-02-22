@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchQuestions } from './actions/quizActions';
-import Question from './Question';
+import { Grid, Container } from 'semantic-ui-react';
+import Quiz from './Quiz';
+import FixedMenu from './common/FixedMenu';
 
 class App extends Component {
   componentWillMount() {
@@ -10,7 +12,16 @@ class App extends Component {
 
   render() {
     return (
-      <Question />
+      <div>
+        <FixedMenu />
+        <Grid centered columns={2} style={{ marginTop: "7em" }}>
+          <Grid.Column>
+            <Container>
+              <Quiz />
+            </Container>
+          </Grid.Column>
+        </Grid>
+      </div>
     );
   }
 }

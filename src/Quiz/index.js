@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Container, Message } from 'semantic-ui-react';
+import { Message } from 'semantic-ui-react';
 import Options from './Options';
 import { askAnotherQuestion, completeQuiz, finishQuiz } from '../actions/quizActions';
+import Loader from './Loader';
 
+const OPTION_COLORS = {
+  default: "violet",
+  correct: "green",
+  wrong: "red"
+},
+  defaultOptionColors = [OPTION_COLORS['default'], OPTION_COLORS['default'], OPTION_COLORS['default'], OPTION_COLORS['default']];
 class Question extends Component {
+  state = {
+    optionColors: defaultOptionColors
+  };
   checkAnswer = (answered_index) => {
     const {
       currentQuestion: {
@@ -21,16 +31,27 @@ class Question extends Component {
     if (quizCompleted) {
       completeQuiz();
     } else if (shouldAskAnotherQuestion) {
-      askAnotherQuestion();
+      let optionColors = [...this.state.optionColors];
+      optionColors[answered_index] = OPTION_COLORS['correct'];
+      this.setState({ optionColors });
+      setTimeout(() => {
+        askAnotherQuestion();
+        this.setState({ optionColors: defaultOptionColors });
+      }, 1000);
     } else {
-      finishQuiz();
+      let optionColors = [...this.state.optionColors];
+      optionColors[answered_index] = OPTION_COLORS['wrong'];
+      this.setState({ optionColors });
+      setTimeout(() => {
+        finishQuiz();
+        this.setState({ optionColors: defaultOptionColors });
+      }, 1000);
     }
   }
   render() {
     const { fetching, currentQuestion, error, completed, finished } = this.props;
-    console.log(completed, finished);
     if (fetching) {
-      return <h2>loading...</h2>;
+      return <Loader />;
     }
     if (error) {
       return <h2>{error}</h2>;
@@ -42,16 +63,10 @@ class Question extends Component {
       return <h3>Oops, Try Again</h3>
     }
     return (
-      <Grid centered columns={2}>
-        <Grid.Column>
-          <Container style={{ paddingTop: 10 }}>
-            <Message>
-              <Message.Content> {currentQuestion.question}</Message.Content>
-            </Message>
-            <Options currentQuestion={currentQuestion} checkAnswer={this.checkAnswer} />
-          </Container>
-        </Grid.Column>
-      </Grid>
+      <div>
+        <Message color="violet">{currentQuestion.question}</Message>
+        <Options colors={this.state.optionColors} currentQuestion={currentQuestion} checkAnswer={this.checkAnswer} />
+      </div>
     );
   }
 
